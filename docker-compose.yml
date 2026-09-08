@@ -9,6 +9,7 @@ services:
       - "8000:8000"
     volumes:
       - ./backend/uploads:/app/uploads
+      - ./backend/calls.db:/app/calls.db
     env_file:
       - .env
     restart: unless-stopped

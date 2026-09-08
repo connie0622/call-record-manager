@@ -4,10 +4,12 @@ import os
 from pathlib import Path
 from some_db import save_call_entry, get_call
 from worker import process_call
+from fastapi.responses import FileResponse
 
 app = FastAPI(title="Call Record Manager - Backend MVP")
 
-UPLOAD_DIR = Path("uploads")
+BASE_DIR = Path(__file__).resolve().parent
+UPLOAD_DIR = BASE_DIR / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 ALLOWED_EXT = {".mp3",".mp4",".wav",".m4a"}
@@ -34,3 +36,10 @@ def get_call_record(call_id: str):
     if not rec:
         raise HTTPException(status_code=404, detail="call not found")
     return rec
+
+@app.get("/")
+def root():
+    index_path = BASE_DIR / "static" / "index.html"
+    if index_path.exists():
+        return FileResponse(str(index_path))
+    return {"status": "ok"}
