@@ -1,0 +1,6 @@
+# Ignore local uploads and Python virtual env
+uploads/
+.venv/
+__pycache__/
+*.pyc
+.env
